@@ -2,16 +2,18 @@
 
 namespace App\Models;
 
-class Genre
+use Illuminate\Database\Eloquent\Model;
+
+class Genre extends Model
 {
-    public static function getAll()
+    protected $table = 'genres';
+    protected $fillable = [
+        'name', 
+        'description'
+    ];
+
+    public function books()
     {
-        return [
-            ['id' => 1, 'name' => 'Fantasy'],
-            ['id' => 2, 'name' => 'Adventure'],
-            ['id' => 3, 'name' => 'Romance'],
-            ['id' => 4, 'name' => 'Sci-Fi'],
-            ['id' => 5, 'name' => 'Horror'],
-        ];
+        return $this->hasMany(Book::class);
     }
 }

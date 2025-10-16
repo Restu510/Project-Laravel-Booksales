@@ -2,16 +2,19 @@
 
 namespace App\Models;
 
-class Author
+use Illuminate\Database\Eloquent\Model;
+
+class Author extends Model
 {
-    public static function getAll()
+    protected $table = 'authors';
+    protected $fillable = [
+        'name', 
+        'photo', 
+        'bio'
+    ];
+
+    public function books()
     {
-        return [
-            ['id' => 1, 'name' => 'Brandon Sanderson'],
-            ['id' => 2, 'name' => 'J.K. Rowling'],
-            ['id' => 3, 'name' => 'Stephen King'],
-            ['id' => 4, 'name' => 'H.P. Lovecraft'],
-            ['id' => 5, 'name' => 'Kentaro Miura'],
-        ];
+        return $this->hasMany(Book::class);
     }
 }
