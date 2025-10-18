@@ -10,22 +10,29 @@ class GenreController extends Controller
     public function index()
     {
         $genres = Genre::all();
-        return view('genres.index', compact('genres'));
-    }
 
-    public function create()
-    {
-        return view('genres.create');
+        return response()->json([
+            'success' => true,
+            'data' => $genres
+        ]);
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|string|max:255',
             'description' => 'nullable|string',
         ]);
 
-        Genre::create($request->all());
-        return redirect()->route('genres.index')->with('success', 'Genre created successfully!');
+        $genre = Genre::create([
+            'name' => $request->name,
+            'description' => $request->description,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Genre berhasil ditambahkan!',
+            'data' => $genre
+        ]);
     }
 }
